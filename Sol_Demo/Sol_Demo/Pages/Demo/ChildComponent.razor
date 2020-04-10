@@ -1,0 +1,33 @@
+﻿<h3>ChildComponent</h3>
+
+<h2>
+    @Message
+</h2>
+<button class="btn btn-success" @onclick="OnUpdateMessageChildWithParentAction"> Child : Submit : Action Delegate</button>
+<button class="btn btn-success" @onclick="OnUpdateMessageChildWithParentEventCallBack"> Child : Submit : EventCallBack</button>
+
+
+@code {
+
+    [Parameter]
+    public String Message { get; set; }
+
+    [Parameter]
+    public Action<String> MessageChangeEvent1 { get; set; }
+
+    [Parameter]
+    public EventCallback<String> MessageChangeEvent2 { get; set; }
+
+    private void OnUpdateMessageChildWithParentAction()
+    {
+        Message = "Child : Action : Hello";
+        MessageChangeEvent1?.Invoke(Message);
+    }
+
+    private async Task OnUpdateMessageChildWithParentEventCallBack()
+    {
+        Message = "Child : EventCallBack : Hello";
+        await MessageChangeEvent2.InvokeAsync(Message);
+    }
+
+}
